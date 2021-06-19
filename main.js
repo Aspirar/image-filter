@@ -35,7 +35,8 @@ function getFShaderSrc() {
     out vec4 pixel;
 
     void main() {
-      pixel = texture(uImage, vTex);
+      vec2 tex = floor(vTex * 50.) / 50.;
+      pixel = texture(uImage, tex);
     }
   `;
 }
