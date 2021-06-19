@@ -18,10 +18,12 @@ function getVShaderSrc() {
     in vec4 aPos;
     in vec2 aTex;
     out vec2 vTex;
+    out vec4 vPos;
 
     void main() {
       gl_Position = aPos;
       vTex = aTex;
+      vPos = aPos;
     }
   `;
 }
@@ -32,11 +34,19 @@ function getFShaderSrc() {
 
     uniform sampler2D uImage;
     in vec2 vTex;
+    in vec4 vPos;
     out vec4 pixel;
 
     void main() {
+      vec2 uv = vPos.xy;
+      uv = fract(uv * 25.) * 2. - 1.;
+      float d = length(uv);
+
       vec2 tex = floor(vTex * 50.) / 50.;
-      pixel = texture(uImage, tex);
+      vec4 color = texture(uImage, tex);
+
+      vec4 base = vec4(vec3(0.), 1.);
+      pixel = mix(base, color, smoothstep(.99, .98, d));
     }
   `;
 }
