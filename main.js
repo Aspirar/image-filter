@@ -46,7 +46,7 @@ function getFShaderSrc() {
       vec4 color = texture(uImage, tex);
 
       vec4 base = vec4(vec3(0.), 1.);
-      pixel = mix(base, color, smoothstep(1.21, 1.20, d));
+      pixel = mix(base, color, smoothstep(1.5, 1., d));
     }
   `;
 }
